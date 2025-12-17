@@ -1,44 +1,42 @@
-.carousel-viewport {
+/* Kontener główny - "okno", przez które patrzymy na zdjęcia */
+.carousel-container {
     width: 100%;
-    max-width: 1920px;
-    margin: 0 auto;
-    overflow: hidden; /* Ukrywa zdjęcia poza widocznym obszarem */
-    aspect-ratio: 16 / 9; /* Zachowuje proporcje 1920x1080 */
+    overflow: hidden;
+    background: #000;
 }
 
+/* Taśma ze zdjęciami */
 .carousel-track {
     display: flex;
-    width: 500%; /* 5 zdjęć (4 + 1 zapętlające), każde po 100% szerokości */
-    animation: slide-animation 20s infinite ease-in-out;
+    /* 8 zdjęć w rzędzie, każde po 100% szerokości okna */
+    width: 800%; 
+    animation: scroll-horizontal 40s linear infinite;
 }
 
 .slide {
-    width: 100%;
+    width: 100vw; /* Zdjęcie zajmuje całą szerokość ekranu */
+    aspect-ratio: 16 / 9; /* Proporcje 1920x1080 */
+    flex-shrink: 0;
 }
 
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover;
+    object-fit: cover; /* Wypełnienie bez zniekształceń */
     display: block;
 }
 
-/* Animacja dla 4 zdjęć:
-   0-20%   : Zdjęcie 1
-   25-45%  : Zdjęcie 2
-   50-70%  : Zdjęcie 3
-   75-95%  : Zdjęcie 4
-   100%    : Powrót do początku
-*/
-@keyframes slide-animation {
-    0%, 20%  { transform: translateX(0); }
-    25%, 45% { transform: translateX(-20%); }
-    50%, 70% { transform: translateX(-40%); }
-    75%, 95% { transform: translateX(-60%); }
-    100%     { transform: translateX(-80%); }
+/* Animacja płynnego przesunięcia o 4 zdjęcia (połowa szerokości tracka) */
+@keyframes scroll-horizontal {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-50%);
+    }
 }
 
-/* Zatrzymanie po najechaniu myszką (opcjonalnie) */
-.carousel-viewport:hover .carousel-track {
+/* Zatrzymanie po najechaniu myszką */
+.carousel-container:hover .carousel-track {
     animation-play-state: paused;
 }
