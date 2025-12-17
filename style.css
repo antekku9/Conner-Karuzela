@@ -1,42 +1,51 @@
-/* Kontener główny - "okno", przez które patrzymy na zdjęcia */
-.carousel-container {
-    width: 100%;
-    overflow: hidden;
-    background: #000;
+body {
+    margin: 0;
+    overflow-x: hidden;
+    background-color: #000; /* Tło jak na stronie frameworkstudio */
 }
 
-/* Taśma ze zdjęciami */
+.framework-carousel {
+    width: 100vw;
+    height: 100vh; /* Zajmuje całą wysokość ekranu */
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    position: relative;
+}
+
 .carousel-track {
     display: flex;
-    /* 8 zdjęć w rzędzie, każde po 100% szerokości okna */
-    width: 800%; 
-    animation: scroll-horizontal 40s linear infinite;
+    /* Każdy zestaw to 4 zdjęcia, mamy 2 zestawy = 8 zdjęć. 
+       Jedno zdjęcie ma szerokość ok. 80% ekranu dla efektu kinowego */
+    width: calc(80vw * 8); 
+    animation: scroll-płynny 40s linear infinite;
 }
 
 .slide {
-    width: 100vw; /* Zdjęcie zajmuje całą szerokość ekranu */
-    aspect-ratio: 16 / 9; /* Proporcje 1920x1080 */
+    width: 80vw; /* Zdjęcie jest szerokie, ale widać fragmenty sąsiednich */
+    aspect-ratio: 1920 / 1080;
+    padding: 0 10px; /* Delikatna przerwa między zdjęciami */
     flex-shrink: 0;
 }
 
 .slide img {
     width: 100%;
     height: 100%;
-    object-fit: cover; /* Wypełnienie bez zniekształceń */
-    display: block;
+    object-fit: cover;
+    filter: grayscale(20%); /* Lekki efekt wizualny */
+    transition: filter 0.5s ease;
 }
 
-/* Animacja płynnego przesunięcia o 4 zdjęcia (połowa szerokości tracka) */
-@keyframes scroll-horizontal {
+.slide img:hover {
+    filter: grayscale(0%);
+}
+
+/* Kluczowa animacja przesuwająca dokładnie o połowę tracka (4 zdjęcia) */
+@keyframes scroll-płynny {
     0% {
         transform: translateX(0);
     }
     100% {
-        transform: translateX(-50%);
+        transform: translateX(calc(-80vw * 4));
     }
-}
-
-/* Zatrzymanie po najechaniu myszką */
-.carousel-container:hover .carousel-track {
-    animation-play-state: paused;
 }
