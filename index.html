@@ -1,82 +1,71 @@
 <!DOCTYPE html>
-<html lang="pl">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karuzela 1920x1080</title>
     <style>
-        /* Stylizacja ogólna */
-        body {
-            margin: 0;
-            padding: 0;
-            background-color: #000; /* Czarne tło jak w studio */
+        body { margin: 0; background: #222; overflow: hidden; }
+        
+        /* Kontener */
+        .window {
+            width: 100vw;
+            height: 56.25vw; /* To jest proporcja 1920x1080 (16:9) */
+            max-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            background: red; /* JEŚLI TO WIDZISZ, TO KARUZELA JEST NA STRONIE */
+        }
+
+        /* Pasek ze zdjęciami */
+        .track {
+            display: flex;
+            width: 500%;
+            height: 100%;
+            /* 12 sekund na całość, żebyś szybko zobaczył czy działa */
+            animation: slide 12s infinite ease-in-out;
+        }
+
+        .slide {
+            width: 100vw;
+            height: 100%;
+            flex-shrink: 0;
             display: flex;
             align-items: center;
             justify-content: center;
-            height: 100vh;
-            overflow: hidden; /* Brak pasków przewijania strony */
+            font-size: 50px;
+            color: white;
+            font-family: Arial;
         }
 
-        /* Kontener widoku (okno) */
-        .carousel-viewport {
-            width: 100vw;
-            position: relative;
-            overflow: hidden;
-        }
-
-        /* Taśma ze zdjęciami */
-        .carousel-track {
-            display: flex;
-            width: 500%; /* 4 zdjęcia + 1 dodatkowe dla płynnej pętli */
-            /* Cały cykl trwa 20 sekund (4s na zdjęcie + przejście) */
-            animation: slide-animation 20s infinite ease-in-out;
-        }
-
-        /* Pojedynczy slajd */
-        .slide {
-            width: 100vw;
-            aspect-ratio: 1920 / 1080;
-            flex-shrink: 0;
-        }
+        /* Tła testowe na wypadek gdyby zdjęcia nie działały */
+        .s1 { background: #333; }
+        .s2 { background: #444; }
+        .s3 { background: #555; }
+        .s4 { background: #666; }
 
         .slide img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Zdjęcie wypełnia kadr bez zniekształceń */
-            display: block;
+            object-fit: cover;
         }
 
-        /* Animacja: zatrzymanie na zdjęciu i płynne przejście */
-        /* 0-20%   (4s) - Zdjęcie 1 stoi
-           25-45%  (4s) - Zdjęcie 2 stoi
-           50-70%  (4s) - Zdjęcie 3 stoi
-           75-95%  (4s) - Zdjęcie 4 stoi
-           100%    - Powrót do startu
-        */
-        @keyframes slide-animation {
+        @keyframes slide {
             0%, 20%   { transform: translateX(0); }
             25%, 45%  { transform: translateX(-100vw); }
             50%, 70%  { transform: translateX(-200vw); }
             75%, 95%  { transform: translateX(-300vw); }
             100%      { transform: translateX(-400vw); }
         }
-
-        /* Opcjonalnie: zatrzymanie ruchu po najechaniu myszką */
-        .carousel-viewport:hover .carousel-track {
-            animation-play-state: paused;
-        }
     </style>
 </head>
 <body>
 
-    <div class="carousel-viewport">
-        <div class="carousel-track">
-            <div class="slide"><img src="jpg/1.jpg" alt="Projekt 1"></div>
-            <div class="slide"><img src="jpg/2.jpg" alt="Projekt 2"></div>
-            <div class="slide"><img src="jpg/3.jpg" alt="Projekt 3"></div>
-            <div class="slide"><img src="jpg/4.jpg" alt="Projekt 4"></div>
-            
-            <div class="slide"><img src="jpg/1.jpg" alt="Projekt 1"></div>
+    <div class="window">
+        <div class="track">
+            <div class="slide s1"><img src="jpg/1.jpg" alt="Błąd zdjęcia 1"></div>
+            <div class="slide s2"><img src="jpg/2.jpg" alt="Błąd zdjęcia 2"></div>
+            <div class="slide s3"><img src="jpg/3.jpg" alt="Błąd zdjęcia 3"></div>
+            <div class="slide s4"><img src="jpg/4.jpg" alt="Błąd zdjęcia 4"></div>
+            <div class="slide s1"><img src="jpg/1.jpg" alt="Błąd zdjęcia 1"></div>
         </div>
     </div>
 
